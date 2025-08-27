@@ -1,0 +1,36 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      BACKEND_URL: http://backend:8080
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: clinic
+      DB_PASSWORD: clinicpass
+      DB_NAME: clinicdb
+
+  db:
+    image: postgres:15
+    container_name: clinicdb
+    environment:
+      POSTGRES_USER: clinic
+      POSTGRES_PASSWORD: clinicpass
+      POSTGRES_DB: clinicdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
