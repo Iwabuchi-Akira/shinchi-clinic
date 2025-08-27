@@ -14,3 +14,9 @@ services:
   db:
     ports:
       - "5432:5432"
+
+  nginx:
+    # Development override: custom config + self-signed certs
+    volumes:
+      - ./nginx-dev.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./dev-certs:/etc/ssl/dev:ro
