@@ -16,39 +16,30 @@ func main() {
 
 	e := echo.New()
 
-	// CORSミドルウェア
 	e.Use(middleware.CORS())
-	// ログミドルウェア
 	e.Use(middleware.Logger())
-	// リカバリミドルウェア
 	e.Use(middleware.Recover())
 
-	// 認証が不要なルート（パブリックAPI）
 	public := e.Group("/api")
-
-	// ログインのみ認証不要
-	public.POST("/login", handlers.Login)
-
-	// 認証が必要なルート（プロテクトされたAPI）
 	protected := e.Group("/api")
 	protected.Use(authmiddleware.JWTMiddleware())
 
-	// 現在のユーザー情報
-	protected.GET("/users", handlers.GetCurrentUser)
+	public.POST("/login", handlers.Login)
+	
+	protected.GET("/user", handlers.GetCurrentUser)
+	protected.GET("/users", handlers.GetUsers)
+	protected.POST("/users", handlers.CreateUser)
+	protected.DELETE("/users/:id", handlers.DeleteUser)
 
-	protected.POST("/register", handlers.Register)
-
-	// ニュース関連のAPI（すべて認証が必要）
-	protected.GET("/news", handlers.GetNews)
+	public.GET("/news", handlers.GetNews)
+	public.GET("/news/:id", handlers.GetNewsByID)
 	protected.POST("/news", handlers.CreateNews)
-	protected.GET("/news/:id", handlers.GetNewsByID)
 	protected.PUT("/news/:id", handlers.UpdateNews)
 	protected.DELETE("/news/:id", handlers.DeleteNews)
 
-	// ブログ関連のAPI（すべて認証が必要）
-	protected.GET("/blog", handlers.GetBlogs)
+	public.GET("/blog", handlers.GetBlogs)
+	public.GET("/blog/:id", handlers.GetBlogByID)
 	protected.POST("/blog", handlers.CreateBlog)
-	protected.GET("/blog/:id", handlers.GetBlogByID)
 	protected.PUT("/blog/:id", handlers.UpdateBlog)
 	protected.DELETE("/blog/:id", handlers.DeleteBlog)
 

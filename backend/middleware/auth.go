@@ -7,16 +7,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// JWTシークレットキーを取得
 func getJWTSecret() string {
 	secret := os.Getenv("JWT_SECRET")
 	if secret == "" {
-		secret = "your-secret-key" // 本番環境では必ず環境変数で設定してください
+		secret = "your-secret-key" 
 	}
 	return secret
 }
 
-// JWT認証ミドルウェア
 func JWTMiddleware() echo.MiddlewareFunc {
 	config := echojwt.Config{
 		SigningKey: []byte(getJWTSecret()),
