@@ -30,33 +30,33 @@ func GetNewsByID(c echo.Context) error {
 	id := c.Param("id")
 	var news models.News
 	if err := db.DB.First(&news, id).Error; err != nil {
-		return c.JSON(404, map[string]string{"error": "News not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "News not found"})
 	}
-	return c.JSON(200, news)
+	return c.JSON(http.StatusOK, news)
 }
 
 func UpdateNews(c echo.Context) error {
 	id := c.Param("id")
 	var news models.News
 	if err := db.DB.First(&news, id).Error; err != nil {
-		return c.JSON(404, map[string]string{"error": "News not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "News not found"})
 	}
 
 	if err := c.Bind(&news); err != nil {
-		return c.JSON(400, map[string]string{"error": err.Error()})
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
 	news.UpdatedAt = time.Now()
 	db.DB.Save(&news)
-	return c.JSON(200, news)
+	return c.JSON(http.StatusOK, news)
 }
 
 func DeleteNews(c echo.Context) error {
 	id := c.Param("id")
 	if err := db.DB.Delete(&models.News{}, id).Error; err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
-	return c.JSON(204, nil)
+	return c.NoContent(http.StatusNoContent)
 }
 
 

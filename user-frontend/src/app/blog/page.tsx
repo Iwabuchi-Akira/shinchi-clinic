@@ -5,6 +5,7 @@ interface BlogItem {
 }
 
 async function getNews() {
+  // const res = await fetch("/api/blog", { cache: "no-store" });
   const res = await fetch("http://localhost:3000/api/blog", { cache: "no-store" });
   return res.json();
 }

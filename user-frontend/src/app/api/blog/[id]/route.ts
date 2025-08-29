@@ -37,18 +37,8 @@ const dummyBlogs: Blog[] = [
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
-) {
-  // ダミーAPIが無効な場合は404を返す
-  // デフォルトはダミーAPI使用（USE_DUMMY_API=true）
-  const useDummyApi = process.env.USE_DUMMY_API ?? 'true';
-  
-  if (useDummyApi !== 'true') {
-    return NextResponse.json(
-      { error: 'API endpoint not available in production mode' },
-      { status: 404 }
-    );
-  }
-
+) 
+  {
   try {
     const { id } = await params;
     const blogId = parseInt(id, 10);

@@ -31,7 +31,30 @@ func GetBlogByID(c echo.Context) error {
 	id := c.Param("id")
 	var blog models.Blog
 	if err := db.DB.First(&blog, id).Error; err != nil {
-		return c.JSON(404, map[string]string{"error": "Blog not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "Blog not found"})
 	}
-	return c.JSON(200, blog)
+	return c.JSON(http.StatusOK, blog)
+}
+
+func UpdateBlog(c echo.Context) error {
+	id := c.Param("id")
+	var blog models.Blog
+	if err := db.DB.First(&blog, id).Error; err != nil {
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "Blog not found"})
+	}
+	if err := c.Bind(&blog); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
+	}
+
+	blog.UpdatedAt = time.Now()
+	db.DB.Save(&blog)
+	return c.JSON(http.StatusOK, blog)
+}
+
+func DeleteBlog(c echo.Context) error {
+	id := c.Param("id")
+	if err := db.DB.Delete(&models.Blog{}, id).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.NoContent(http.StatusNoContent)
 }

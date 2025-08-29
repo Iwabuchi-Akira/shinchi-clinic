@@ -41,15 +41,6 @@ const dummyNews: News[] = [
 ];
 
 export async function GET() {
-  const useDummyApi = process.env.USE_DUMMY_API ?? 'true';
-  
-  if (useDummyApi !== 'true') {
-    return NextResponse.json(
-      { error: 'API endpoint not available in production mode' },
-      { status: 404 }
-    );
-  }
-
   try {
     return NextResponse.json(dummyNews);
   } catch (error) {

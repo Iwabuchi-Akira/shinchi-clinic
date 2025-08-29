@@ -1,5 +1,6 @@
 // app/page.tsx
 async function getNews() {
+  // const res = await fetch("/api/news", { cache: "no-store" });
   const res = await fetch("http://localhost:3000/api/news", { cache: "no-store" });
   return res.json();
 }
