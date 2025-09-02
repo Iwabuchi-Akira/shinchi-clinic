@@ -36,6 +36,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // In development mode, auto-login with dummy user
+    const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
+    
+    if (isDevMode) {
+      const dummyUser = {
+        id: 1,
+        username: process.env.NEXT_PUBLIC_DUMMY_USERNAME || 'admin'
+      };
+      const dummyToken = 'dummy-jwt-token-for-development';
+      
+      setUser(dummyUser);
+      setToken(dummyToken);
+      localStorage.setItem('token', dummyToken);
+      localStorage.setItem('user', JSON.stringify(dummyUser));
+      setLoading(false);
+      return;
+    }
+
     const savedToken = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
     

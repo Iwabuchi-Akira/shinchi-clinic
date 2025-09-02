@@ -26,7 +26,7 @@ func main() {
 
 	public.POST("/login", handlers.Login)
 	
-	protected.GET("/user", handlers.GetCurrentUser)
+	protected.GET("/me", handlers.GetCurrentUser)
 	protected.GET("/users", handlers.GetUsers)
 	protected.POST("/users", handlers.CreateUser)
 	protected.DELETE("/users/:id", handlers.DeleteUser)
