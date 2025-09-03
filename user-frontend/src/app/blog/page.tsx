@@ -1,17 +1,17 @@
+const API_BASE_URL = process.env.API_BASE_URL;
 interface BlogItem {
   id: string | number;
   title: string;
   content: string;
 }
 
-async function getNews() {
-  // const res = await fetch("/api/blog", { cache: "no-store" });
-  const res = await fetch("http://localhost:3000/api/blog", { cache: "no-store" });
+async function getBlog() {
+  const res = await fetch(`${API_BASE_URL}/blog`, { cache: "no-store" });
   return res.json();
 }
 
 export default async function HomePage() {
-  const news = await getNews();
+  const news = await getBlog();
   return (
     <main className="p-8">
       <h1 className="text-3xl font-bold">新地クリニック</h1>

@@ -36,13 +36,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In development mode, auto-login with dummy user
-    const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
-    
-    if (isDevMode) {
+    if (process.env.DEV_MODE) {
       const dummyUser = {
         id: 1,
-        username: process.env.NEXT_PUBLIC_DUMMY_USERNAME || 'admin'
+        username: process.env.DUMMY_USERNAME || 'admin'
       };
       const dummyToken = 'dummy-jwt-token-for-development';
       

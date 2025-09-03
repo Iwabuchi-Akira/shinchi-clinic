@@ -1,6 +1,8 @@
 // src/app/blog/[id]/page.tsx
 import { notFound } from "next/navigation";
 
+const API_BASE_URL = process.env.API_BASE_URL;
+
 interface Blog {
   id: number;
   title: string;
@@ -10,8 +12,7 @@ interface Blog {
 }
 
 async function fetchBlog(id: string): Promise<Blog> {
-  // const res = await fetch(`/api/blog/${id}`, { cache: "no-store" });
-  const res = await fetch(`http://localhost:3000/api/blog/${id}`, { cache: "no-store" });
+  const res = await fetch(`${API_BASE_URL}/blog/${id}`, { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch blog");
   return res.json();
 }

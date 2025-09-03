@@ -1,14 +1,12 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api';
-const IS_DEV_MODE = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
+const API_BASE_URL = process.env.API_BASE_URL;
 
 interface ApiRequestInit extends RequestInit {
   token?: string;
 }
 
-// Dummy data for development mode
 const DUMMY_USER = {
   id: 1,
-  username: process.env.NEXT_PUBLIC_DUMMY_USERNAME || 'admin'
+  username: process.env.DUMMY_USERNAME || 'admin'
 };
 
 const DUMMY_TOKEN = 'dummy-jwt-token-for-development';
@@ -30,8 +28,7 @@ export class ApiClient {
     endpoint: string,
     options: ApiRequestInit = {}
   ): Promise<T> {
-    // Development mode mock responses
-    if (IS_DEV_MODE) {
+    if (process.env.DEV_MODE) {
       return this.getMockResponse<T>(endpoint, options);
     }
 
@@ -64,8 +61,8 @@ export class ApiClient {
     // Mock login endpoint
     if (endpoint === '/login' && options.method === 'POST') {
       const body = options.body ? JSON.parse(options.body as string) : {};
-      const dummyUsername = process.env.NEXT_PUBLIC_DUMMY_USERNAME || 'admin';
-      const dummyPassword = process.env.NEXT_PUBLIC_DUMMY_PASSWORD || 'password123';
+      const dummyUsername = process.env.DUMMY_USERNAME || 'admin';
+      const dummyPassword = process.env.DUMMY_PASSWORD || 'password123';
       
       if (body.username === dummyUsername && body.password === dummyPassword) {
         return {

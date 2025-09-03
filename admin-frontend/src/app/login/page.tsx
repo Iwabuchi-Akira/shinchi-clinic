@@ -13,9 +13,9 @@ export default function LoginPage() {
 	const { login } = useAuth();
 	const router = useRouter();
 
-	const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
-	const dummyUsername = process.env.NEXT_PUBLIC_DUMMY_USERNAME || 'admin';
-	const dummyPassword = process.env.NEXT_PUBLIC_DUMMY_PASSWORD || 'password123';
+	const isDevMode = process.env.DEV_MODE === 'true';
+	const dummyUsername = process.env.DUMMY_USERNAME || 'admin';
+	const dummyPassword = process.env.DUMMY_PASSWORD || 'password123';
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();

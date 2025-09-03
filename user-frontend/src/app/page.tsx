@@ -1,7 +1,7 @@
 // app/page.tsx
+const API_BASE_URL = process.env.API_BASE_URL;
 async function getNews() {
-  // const res = await fetch("/api/news", { cache: "no-store" });
-  const res = await fetch("http://localhost:3000/api/news", { cache: "no-store" });
+  const res = await fetch(`${API_BASE_URL}/news`, { cache: "no-store" });
   return res.json();
 }
 

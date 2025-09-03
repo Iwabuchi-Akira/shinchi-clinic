@@ -11,7 +11,7 @@ FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app ./
 
-ENV USE_DUMMY_API=false
+ENV API_BASE_URL=http://backend:8080/api
 
 ENV NODE_ENV=production
 EXPOSE 3000
