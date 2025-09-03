@@ -7,7 +7,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_DISABLE_TYPECHECK=1
-ENV DEV_MODE=false
+ENV NEXT_PUBLIC_DEV_MODE=false
+ENV NEXT_PUBLIC_API_BASE_URL='/api'
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
@@ -15,8 +16,6 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-ENV DEV_MODE=false
-ENV API_BASE_URL=http://backend:8080/api
 COPY --from=builder /app .
 EXPOSE 3000
 CMD ["npm","run","start"]

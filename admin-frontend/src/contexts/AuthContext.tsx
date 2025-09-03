@@ -34,12 +34,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
+  const dummyUsername = process.env.NEXT_PUBLIC_DUMMY_USERNAME || 'admin';
 
   useEffect(() => {
-    if (process.env.DEV_MODE) {
+    if (isDevMode) {
       const dummyUser = {
         id: 1,
-        username: process.env.DUMMY_USERNAME || 'admin'
+        username: dummyUsername || 'admin'
       };
       const dummyToken = 'dummy-jwt-token-for-development';
       
