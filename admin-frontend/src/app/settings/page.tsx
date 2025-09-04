@@ -1,9 +1,16 @@
+import AdminLayout from '@/components/AdminLayout'
+
 export default function SettingsPage() {
 	return (
-		<div className="p-8">
-			<h1 className="text-2xl font-semibold mb-4">Settings</h1>
-			<p className="text-sm text-neutral-600 dark:text-neutral-300">Configure admin settings here.</p>
-		</div>
+		<AdminLayout>
+			<div className="space-y-6">
+				<h1 className="text-3xl font-bold text-gray-900">設定</h1>
+				<div className="bg-white rounded-lg shadow p-6">
+					<h2 className="text-xl font-semibold mb-4">管理者設定</h2>
+					<p className="text-gray-600">管理者設定をここで変更できます。</p>
+				</div>
+			</div>
+		</AdminLayout>
 	);
 }
 

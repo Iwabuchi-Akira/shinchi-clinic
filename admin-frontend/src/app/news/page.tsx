@@ -1,4 +1,26 @@
+"use client"
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import AdminLayout from '@/components/AdminLayout'
+
 export default function NewsListPage() {
-	return <div>Admin News List Page</div>;
+	return (
+		<AdminLayout>
+			<div className="space-y-6">
+				<div className="flex justify-between items-center">
+					<h1 className="text-3xl font-bold text-gray-900">ニュース管理</h1>
+					<Link
+						href="/news/new"
+						className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+					>
+						新規作成
+					</Link>
+				</div>
+				<div className="bg-white rounded-lg shadow p-6">
+					<p className="text-gray-600">ニュース一覧がここに表示されます。</p>
+				</div>
+			</div>
+		</AdminLayout>
+	)
 }
 
